@@ -5,7 +5,7 @@ and master's in financial engineering (risk management). I build LLM and ML syst
 a bank would have to run them: typed, tested, measured, and gated on evidence rather than on
 a point estimate.
 
-Three public labs, nine projects, **788 tests**, `mypy --strict` throughout, CI green on
+Four public labs, twelve projects, **1 276 tests**, `mypy --strict` throughout, CI green on
 every one.
 
 ---
@@ -46,18 +46,32 @@ One credit PD model through its whole operational life.
 | `smdeploy` | One image implementing both SageMaker container contracts, CloudFormation with GitHub OIDC least-privilege roles, content-addressed endpoint configs, canary blue/green with alarm auto-rollback | p50 **8 ms** (1 row) / 89 k rows/s; verified offline with `moto`, and the image built and exercised for real |
 | `mlwatch` | PSI / KS / chi-square / JS / Wasserstein from their definitions with Benjamini-Hochberg correction, delayed-label performance, and an alert policy measured against a simulator with known ground truth | **5 % false alarms**, **100 % detection** of 1σ covariate shift, localised to the right feature |
 
+### 🧾 [advice-ai-lab](https://github.com/ChuanHe-PhD/advice-ai-lab) — read it, draft it, run it
+
+AI applications for a financial-advice platform, measured against synthetic data with a
+known truth and then against an open-source 4 B model on one consumer GPU.
+
+| Project | What it is | Result |
+|---|---|---|
+| `advicedoc` | Ten advice-document types as real PDFs → calibrated classifier with abstention → `rules` / `llm` / `llm_validated` Statement-of-Advice extraction → deterministic validators → a **calibrated review router** (risk-coverage) → advice-vs-implementation reconciliation → durable workflow + API | Reconciliation **57/57 planted discrepancies** at a measured 13 % false-alarm rate; with Qwen3-4B the router reviews **27.5 %** of documents for **0 % residual error** where a validator-only policy leaves 25.6 % wrong |
+| `filenote` | Meeting transcript → file note with **segment-level evidence on every claim**, a model-free verifier measured on planted hallucinations, pseudonymisation, a vanilla HTML/CSS/JS UI (SSE streaming, approval refused server-side while a flag is unresolved), Playwright tests, Terraform for Cloud Run | Verifier: **95–100 % of planted hallucinations caught, 0 % false alarms**; with the real model, verification lowers hallucination 17.1 % → 14.7 % (paired, p = 0.031) and **two design assumptions were overturned and written up as negative results** |
+| `opsloop` | Tracing SDK → **burn-rate SLO alerts** measured on planted incidents → judge sampling + feedback → **versioned eval sets** → prompt registry → **paired-statistics regression gate** → prompt canary with automatic rollback → trace replay and incident reports; Prometheus + Grafana stack run for real | Every incident kind detected in **5–13 min** with **0.22 % false alarms**; the gate passes a good prompt and fails a regressed one (McNemar p < 10⁻⁴); the canary rolls the bad prompt back at 10 % traffic |
+
 ---
 
 ### How these are built
 
-`ruff` and `mypy --strict` over `src/` *and* `tests/`, branch-coverage gates (90 % on eight
-of the nine projects, measured 95–99 %), and CI that runs offline — scripted models, hashing embedders, `moto` for AWS — so a network
-dependency in a test is a failure rather than a flake. Linter versions are pinned: a gate
-that installs whatever PyPI served that morning is not a gate.
+`ruff` and `mypy --strict` over `src/` *and* `tests/`, branch-coverage gates (90 % on eleven
+of the twelve projects, measured 95–99 %), and CI that runs offline — scripted models with
+configurable corruption, hashing embedders, `moto` for AWS — so a network dependency in a
+test is a failure rather than a flake. Linter versions are pinned: a gate that installs
+whatever PyPI served that morning is not a gate.
 
 Results are reported with confidence intervals and, where two things are compared, with a
 paired test and an explicit non-inferiority margin. Where a number is disappointing it is
-written down anyway — `docs/RESULTS.md` in each project records what failed and why.
+written down anyway — `docs/RESULTS.md` in each project records what failed and why, and
+where a real model overturned a design assumption that the scripted checks had passed, that
+is the headline of the section rather than a footnote.
 
 ### Background
 

@@ -91,4 +91,4 @@ function would recognise.
 
 📍 Sydney, Australia · permanent resident (no visa sponsorship needed)
 💼 Open to mid-level GenAI / ML engineering and model-risk roles
-📫 riverhe1001@gmail.com
+📫 chuan.he3@unsw.edu.au

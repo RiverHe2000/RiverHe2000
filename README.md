@@ -5,12 +5,12 @@ and master's in financial engineering (risk management). I build LLM and ML syst
 a bank would have to run them: typed, tested, measured, and gated on evidence rather than on
 a point estimate.
 
-Five public labs, fourteen projects, **1 446 tests**, `mypy --strict` throughout, CI green on
+Five public labs, sixteen projects, **4 430 tests**, `mypy --strict` throughout, CI green on
 every one.
 
 ---
 
-### 🔬 [llm-engineering-lab](https://github.com/ChuanHe-PhD/llm-engineering-lab) — build it, adapt it, serve it
+### 🔬 [llm-engineering-lab](https://github.com/ChuanHe-PhD/llm-engineering-lab) — build it, adapt it, serve it, align it
 
 The model itself, from the maths to the socket.
 
@@ -19,11 +19,12 @@ The model itself, from the maths to the socket.
 | `nanoformer` | Decoder-only Transformer written from scratch — RMSNorm, RoPE, GQA, SwiGLU, KV cache — plus a byte-level BPE tokenizer and an AMP trainer with bit-exact resume | 9.4 M params → **val ppl 27.3** on Tiny Shakespeare in 65 s on one RTX 4070 |
 | `loraeval` | LoRA implemented from first principles; three fine-tuning strategies compared with bootstrap CIs, McNemar paired tests and calibration | LoRA r = 8 (1.1 % trainable) **matches full fine-tuning**: 95.9 % vs 94.4 %, p = 0.125 |
 | `llmserve` | KV-cached batched generation, async dynamic batching with back-pressure, INT8, Prometheus, FastAPI, Docker | **29× throughput at batch 32 for +7 % latency** |
+| `sftdpo` | LoRA supervised fine-tuning then DPO written from the paper (sigmoid / IPO / cDPO), with the preference label produced by a **deterministic verifier** rather than a human or a judge model; paired statistics, per-slice non-regression and a deployability floor | Schema-valid output **14.4 % → 82.5 %** on 0.88 % of the weights, and the JSON repair step in front of the model becomes unnecessary (16 → **0** repaired). My DPO loss agrees with TRL to **1.07e-14** |
 
 Every block has a test that checks a *property* — causality, RoPE relative-position
 invariance, cache/no-cache equivalence, bit-exact resume — not just a tensor shape.
 
-### 🛡️ [genai-platform-lab](https://github.com/ChuanHe-PhD/genai-platform-lab) — retrieve, act, ship
+### 🛡️ [genai-platform-lab](https://github.com/ChuanHe-PhD/genai-platform-lab) — retrieve, act, ship, measure
 
 What an enterprise has to build *around* a model.
 
@@ -32,6 +33,7 @@ What an enterprise has to build *around* a model.
 | `ragpipe` | Hybrid retrieval (BM25 from the formula + dense + reciprocal rank fusion + cross-encoder rerank) and the four RAGAS metrics implemented from their definitions, with bootstrap intervals and release gates | hit_rate@1 **0.852 → 0.926 → 1.000**; faithfulness 0.885 [0.82, 0.94] with a local judge |
 | `agentguard` | LangGraph agent with human approval via `interrupt()`, read-only SQL enforced by the SQLite authorizer, an AST allow-list calculator, and injection / PII / topic / grounding rails | **29/29 scenarios, 16/16 adversarial cases caught, 0 benign blocked** |
 | `llmgate` | OpenAI-compatible gateway: vLLM / OpenAI / local backends, retries + circuit breaker + bulkhead, canary and shadow routing, streaming PII redaction, eval-gated promotion | **≈ 1 ms p50 overhead at 1 100 req/s** |
+| `mcpeval` | A real **Model Context Protocol** server (13 tools, resources, prompts), a client-side permission policy that rules on every call before the transport, a single agent and a LangGraph supervisor multi-agent system that differ *only* in orchestration, and 72 long-horizon tasks graded on the **whole trajectory** | Success requires a correct answer **and** no forbidden-tool violation **and** correct approval behaviour, so a right answer reached by an unauthorised route scores zero; the policy refuses a specialist role's out-of-scope calls before they reach the transport and records the rule that fired, and orchestration is priced in steps and tokens |
 
 A judge that cannot produce valid JSON yields a *missing* metric, never a silent zero — and
 the promotion decision is a paired bootstrap with an exact McNemar test, not a bigger number.
@@ -71,7 +73,7 @@ The first lab: an LLM system a risk function can audit, and the model that funct
 ### How these are built
 
 `ruff` and `mypy --strict` over `src/` *and* `tests/`, branch-coverage gates (85–90 %,
-measured 95–99 % across the fourteen projects), and CI that runs offline — scripted models with
+measured 95–99 % across the sixteen projects), and CI that runs offline — scripted models with
 configurable corruption, hashing embedders, `moto` for AWS — so a network dependency in a
 test is a failure rather than a flake. Linter versions are pinned: a gate that installs
 whatever PyPI served that morning is not a gate.

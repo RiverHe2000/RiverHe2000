@@ -5,7 +5,7 @@ and master's in financial engineering (risk management). I build LLM and ML syst
 a bank would have to run them: typed, tested, measured, and gated on evidence rather than on
 a point estimate.
 
-Five public labs, sixteen projects, **4 430 tests**, `mypy --strict` throughout, CI green on
+Five public labs, sixteen projects, **4 449 tests**, `mypy --strict` throughout, CI green on
 every one.
 
 ---

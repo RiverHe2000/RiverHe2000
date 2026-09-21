@@ -10,7 +10,7 @@ every one.
 
 ---
 
-### 🔬 [llm-engineering-lab](https://github.com/ChuanHe-PhD/llm-engineering-lab) — build it, adapt it, serve it, align it
+### 🔬 [llm-engineering-lab](https://github.com/RiverHe2000/llm-engineering-lab) — build it, adapt it, serve it, align it
 
 The model itself, from the maths to the socket.
 
@@ -24,7 +24,7 @@ The model itself, from the maths to the socket.
 Every block has a test that checks a *property* — causality, RoPE relative-position
 invariance, cache/no-cache equivalence, bit-exact resume — not just a tensor shape.
 
-### 🛡️ [genai-platform-lab](https://github.com/ChuanHe-PhD/genai-platform-lab) — retrieve, act, ship, measure
+### 🛡️ [genai-platform-lab](https://github.com/RiverHe2000/genai-platform-lab) — retrieve, act, ship, measure
 
 What an enterprise has to build *around* a model.
 
@@ -38,7 +38,7 @@ What an enterprise has to build *around* a model.
 A judge that cannot produce valid JSON yields a *missing* metric, never a silent zero — and
 the promotion decision is a paired bootstrap with an exact McNemar test, not a bigger number.
 
-### ⚙️ [mlops-lab](https://github.com/ChuanHe-PhD/mlops-lab) — track it, ship it, watch it
+### ⚙️ [mlops-lab](https://github.com/RiverHe2000/mlops-lab) — track it, ship it, watch it
 
 One credit PD model through its whole operational life.
 
@@ -48,7 +48,7 @@ One credit PD model through its whole operational life.
 | `smdeploy` | One image implementing both SageMaker container contracts, CloudFormation with GitHub OIDC least-privilege roles, content-addressed endpoint configs, canary blue/green with alarm auto-rollback | p50 **8 ms** (1 row) / 89 k rows/s; verified offline with `moto`, and the image built and exercised for real |
 | `mlwatch` | PSI / KS / chi-square / JS / Wasserstein from their definitions with Benjamini-Hochberg correction, delayed-label performance, and an alert policy measured against a simulator with known ground truth | **5 % false alarms**, **100 % detection** of 1σ covariate shift, localised to the right feature |
 
-### 🧾 [advice-ai-lab](https://github.com/ChuanHe-PhD/advice-ai-lab) — read it, draft it, run it
+### 🧾 [advice-ai-lab](https://github.com/RiverHe2000/advice-ai-lab) — read it, draft it, run it
 
 AI applications for a financial-advice platform, measured against synthetic data with a
 known truth and then against an open-source 4 B model on one consumer GPU.
@@ -59,7 +59,7 @@ known truth and then against an open-source 4 B model on one consumer GPU.
 | `filenote` | Meeting transcript → file note with **segment-level evidence on every claim**, a model-free verifier measured on planted hallucinations, pseudonymisation, a vanilla HTML/CSS/JS UI (SSE streaming, approval refused server-side while a flag is unresolved), Playwright tests, Terraform for Cloud Run | Verifier: **95–100 % of planted hallucinations caught, 0 % false alarms**; with the real model, verification lowers hallucination 17.1 % → 14.7 % (paired, p = 0.031) and **two design assumptions were overturned and written up as negative results** |
 | `opsloop` | Tracing SDK → **burn-rate SLO alerts** measured on planted incidents → judge sampling + feedback → **versioned eval sets** → prompt registry → **paired-statistics regression gate** → prompt canary with automatic rollback → trace replay and incident reports; Prometheus + Grafana stack run for real | Every incident kind detected in **5–13 min** with **0.22 % false alarms**; the gate passes a good prompt and fails a regressed one (McNemar p < 10⁻⁴); the canary rolls the bad prompt back at 10 % traffic |
 
-### 🏦 [finrisk-ai-lab](https://github.com/ChuanHe-PhD/finrisk-ai-lab) — extract it, validate it
+### 🏦 [finrisk-ai-lab](https://github.com/RiverHe2000/finrisk-ai-lab) — extract it, validate it
 
 The first lab: an LLM system a risk function can audit, and the model that function owns.
 
